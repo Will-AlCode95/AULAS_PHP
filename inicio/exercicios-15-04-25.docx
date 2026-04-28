@@ -1,0 +1,17 @@
+ EXERCÍCIOS – OPERADORES ARITMÉTICOS E DE ATRIBUIÇÃO (PHP)
+
+Instrução: Escreva o trecho de código PHP correspondente a cada comando abaixo.
+
+1-Mostre o resultado de uma adição entre os valores 15 e 27.
+
+2-Mostre o resultado de uma atribuição por adição onde uma variável inicial com valor 10 recebe mais 8.
+
+3-Mostre o resultado de uma subtração e atribuição partindo do valor 50 e subtraindo 15.
+
+4-Mostre o resultado do operador módulo ao dividir 23 por 5.
+
+5-Mostre o que será impresso na tela ao aplicar o operador de incremento pós-fixado em uma variável com valor inicial 8.
+
+6-Mostre o resultado de uma concatenação e atribuição unindo as strings "Curso " e "PHP".
+
+7-Mostre o valor final de uma variável que começa com 100, é dividida por 4 usando /= e, em seguida, recebe mais 10.

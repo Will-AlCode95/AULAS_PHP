@@ -1,0 +1,22 @@
+#index.html
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Exercício – Formulário HTML</title>
+</head>
+<body>
+    <h2>Cálculo de Compra com Desconto</h2>
+    <form method="post" action="processa.php">
+        <label>Preço unitário (R$):</label><br>
+        <input type="number" name="preco" step="0.01" min="0" required><br><br>
+
+        <label>Quantidade:</label><br>
+        <input type="number" name="quantidade" min="1" required><br><br>
+
+        <button type="submit">Enviar para PHP</button>
+    </form>
+    <p><small>O formulário enviará os dados para o arquivo <code>processa.php</code>.</small></p>
+</body>
+</html>

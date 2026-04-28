@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cadastro Rápido</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg:        #0d0f14;
+      --surface:   #161a23;
+      --border:    #262c3a;
+      --accent:    #c9a84c;
+      --accent2:   #e8c97a;
+      --text:      #e8e4dc;
+      --muted:     #7a7f90;
+      --error:     #e05c5c;
+      --success:   #5cbf8a;
+      --radius:    10px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1rem;
+      background-image:
+        radial-gradient(ellipse 60% 40% at 80% 10%, rgba(201,168,76,.07) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 40% at 10% 90%, rgba(92,191,138,.05) 0%, transparent 60%);
+    }
+
+    .card {
+      width: 100%;
+      max-width: 520px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 2.8rem 2.6rem;
+      box-shadow: 0 24px 64px rgba(0,0,0,.5), 0 0 0 1px rgba(201,168,76,.06);
+      animation: fadeUp .55s ease both;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(22px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .header { margin-bottom: 2.2rem; }
+
+    .badge {
+      display: inline-block;
+      font-size: .68rem;
+      font-weight: 500;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      border: 1px solid rgba(201,168,76,.3);
+      border-radius: 99px;
+      padding: .28rem .9rem;
+      margin-bottom: 1rem;
+    }
+
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.85rem;
+      font-weight: 700;
+      line-height: 1.2;
+      color: var(--text);
+      margin-bottom: .5rem;
+    }
+
+    h1 span { color: var(--accent); }
+
+    .subtitle {
+      font-size: .88rem;
+      color: var(--muted);
+      font-weight: 300;
+    }
+
+    .divider {
+      height: 1px;
+      background: linear-gradient(90deg, var(--accent) 0%, transparent 80%);
+      margin: .6rem 0 1.8rem;
+      opacity: .4;
+    }
+
+    .field { margin-bottom: 1.35rem; }
+
+    label {
+      display: flex;
+      align-items: center;
+      gap: .4rem;
+      font-size: .8rem;
+      font-weight: 500;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: .55rem;
+    }
+
+    label .req {
+      color: var(--accent);
+      font-size: .9rem;
+      line-height: 1;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="number"],
+    select {
+      width: 100%;
+      background: rgba(255,255,255,.03);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-size: .95rem;
+      padding: .75rem 1rem;
+      transition: border-color .2s, box-shadow .2s, background .2s;
+      outline: none;
+      -webkit-appearance: none;
+    }
+
+    input::placeholder { color: var(--muted); opacity: .6; }
+
+    input:focus,
+    select:focus {
+      border-color: var(--accent);
+      background: rgba(201,168,76,.04);
+      box-shadow: 0 0 0 3px rgba(201,168,76,.1);
+    }
+
+    input.invalid, select.invalid {
+      border-color: var(--error);
+      box-shadow: 0 0 0 3px rgba(224,92,92,.1);
+    }
+
+    select {
+      cursor: pointer;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%237a7f90' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 1rem center;
+      padding-right: 2.5rem;
+    }
+
+    select option {
+      background: #1e2330;
+      color: var(--text);
+    }
+
+    .hint {
+      font-size: .75rem;
+      color: var(--muted);
+      margin-top: .4rem;
+      opacity: .8;
+    }
+
+    .field-error {
+      font-size: .75rem;
+      color: var(--error);
+      margin-top: .4rem;
+      display: none;
+    }
+
+    /* Checkbox */
+    .check-wrap {
+      display: flex;
+      align-items: flex-start;
+      gap: .85rem;
+      padding: 1rem 1.1rem;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      cursor: pointer;
+      transition: border-color .2s, background .2s;
+      margin-bottom: 1.6rem;
+    }
+
+    .check-wrap:hover {
+      border-color: rgba(201,168,76,.35);
+      background: rgba(201,168,76,.03);
+    }
+
+    .check-wrap input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      min-width: 18px;
+      border: 1.5px solid var(--border);
+      border-radius: 5px;
+      background: transparent;
+      appearance: none;
+      -webkit-appearance: none;
+      cursor: pointer;
+      margin-top: 2px;
+      transition: all .15s;
+      position: relative;
+    }
+
+    .check-wrap input[type="checkbox"]:checked {
+      background: var(--accent);
+      border-color: var(--accent);
+    }
+
+    .check-wrap input[type="checkbox"]:checked::after {
+      content: '';
+      position: absolute;
+      left: 4px; top: 1px;
+      width: 6px; height: 10px;
+      border: 2px solid #0d0f14;
+      border-top: none;
+      border-left: none;
+      transform: rotate(45deg);
+    }
+
+    .check-label { font-size: .88rem; line-height: 1.5; cursor: pointer; }
+    .check-label strong { display: block; color: var(--text); margin-bottom: .15rem; }
+    .check-label span  { color: var(--muted); font-size: .8rem; }
+
+    /* Submit */
+    .btn-submit {
+      width: 100%;
+      padding: .9rem;
+      background: linear-gradient(135deg, var(--accent) 0%, #a8862f 100%);
+      color: #0d0f14;
+      font-family: 'DM Sans', sans-serif;
+      font-size: .92rem;
+      font-weight: 600;
+      letter-spacing: .05em;
+      border: none;
+      border-radius: var(--radius);
+      cursor: pointer;
+      transition: opacity .2s, transform .15s, box-shadow .2s;
+      box-shadow: 0 4px 20px rgba(201,168,76,.25);
+    }
+
+    .btn-submit:hover {
+      opacity: .92;
+      transform: translateY(-1px);
+      box-shadow: 0 8px 28px rgba(201,168,76,.35);
+    }
+
+    .btn-submit:active { transform: translateY(0); }
+
+    .footer-note {
+      text-align: center;
+      font-size: .75rem;
+      color: var(--muted);
+      margin-top: 1.2rem;
+    }
+
+    .footer-note a { color: var(--accent); text-decoration: none; }
+
+    /* Client-side error list */
+    .error-box {
+      display: none;
+      background: rgba(224,92,92,.08);
+      border: 1px solid rgba(224,92,92,.3);
+      border-radius: var(--radius);
+      padding: .9rem 1.1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .error-box p {
+      font-size: .82rem;
+      font-weight: 600;
+      color: var(--error);
+      margin-bottom: .5rem;
+      display: flex;
+      align-items: center;
+      gap: .4rem;
+    }
+
+    .error-box ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .error-box ul li {
+      font-size: .8rem;
+      color: #e08080;
+      padding: .18rem 0;
+      padding-left: 1rem;
+      position: relative;
+    }
+
+    .error-box ul li::before {
+      content: '›';
+      position: absolute;
+      left: 0;
+      color: var(--error);
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="header">
+      <div class="badge">Sistema Interno</div>
+      <h1>Cadastro <span>Rápido</span></h1>
+      <p class="subtitle">Preencha os dados abaixo para continuar</p>
+      <div class="divider"></div>
+    </div>
+
+    <!-- Caixa de erros client-side -->
+    <div class="error-box" id="errorBox">
+      <p>⚠ Corrija os campos abaixo antes de enviar:</p>
+      <ul id="errorList"></ul>
+    </div>
+
+    <form id="cadastroForm" action="receber.php" method="POST" novalidate>
+
+      <!-- Nome -->
+      <div class="field">
+        <label for="nome">Nome <span class="req">*</span></label>
+        <input type="text" id="nome" name="nome"
+               placeholder="Seu nome completo"
+               maxlength="50" autocomplete="name" />
+        <div class="field-error" id="err-nome"></div>
+      </div>
+
+      <!-- E-mail -->
+      <div class="field">
+        <label for="email">E-mail <span class="req">*</span></label>
+        <input type="email" id="email" name="email"
+               placeholder="voce@exemplo.com"
+               autocomplete="email" />
+        <div class="field-error" id="err-email"></div>
+      </div>
+
+      <!-- Assunto -->
+      <div class="field">
+        <label for="assunto">Assunto <span class="req">*</span></label>
+        <select id="assunto" name="assunto">
+          <option value="">— Selecione um assunto —</option>
+          <option value="duvida">Dúvida</option>
+          <option value="sugestao">Sugestão</option>
+          <option value="suporte">Suporte</option>
+        </select>
+        <div class="field-error" id="err-assunto"></div>
+      </div>
+
+      <!-- Idade -->
+      <div class="field">
+        <label for="idade">Idade</label>
+        <input type="number" id="idade" name="idade"
+               placeholder="Ex: 30"
+               min="1" max="120" />
+        <div class="hint">Opcional · entre 1 e 120 anos</div>
+        <div class="field-error" id="err-idade"></div>
+      </div>
+
+      <!-- Newsletter -->
+      <label class="check-wrap" for="newsletter">
+        <input type="checkbox" id="newsletter" name="newsletter" value="1" />
+        <div class="check-label">
+          <strong>Aceitar Newsletter</strong>
+          <span>Receba novidades e atualizações por e-mail</span>
+        </div>
+      </label>
+
+      <button type="submit" class="btn-submit">Enviar Cadastro →</button>
+
+    </form>
+
+    <p class="footer-note">Campos marcados com <span style="color:var(--accent)">*</span> são obrigatórios</p>
+  </div>
+
+  <script>
+    const form = document.getElementById('cadastroForm');
+
+    function showError(fieldId, msg) {
+      const el = document.getElementById('err-' + fieldId);
+      const input = document.getElementById(fieldId);
+      if (el) { el.textContent = msg; el.style.display = 'block'; }
+      if (input) input.classList.add('invalid');
+    }
+
+    function clearError(fieldId) {
+      const el = document.getElementById('err-' + fieldId);
+      const input = document.getElementById(fieldId);
+      if (el) { el.textContent = ''; el.style.display = 'none'; }
+      if (input) input.classList.remove('invalid');
+    }
+
+    // Live validation
+    ['nome','email','assunto','idade'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.addEventListener('input', () => clearError(id));
+    });
+
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      let errors = [];
+
+      // Limpa erros anteriores
+      ['nome','email','assunto','idade'].forEach(clearError);
+
+      const nome    = document.getElementById('nome').value.trim();
+      const email   = document.getElementById('email').value.trim();
+      const assunto = document.getElementById('assunto').value;
+      const idadeRaw = document.getElementById('idade').value.trim();
+
+      // Validação — Nome
+      if (!nome) {
+        showError('nome', 'Nome é obrigatório.');
+        errors.push('Nome é obrigatório.');
+      } else if (nome.length > 50) {
+        showError('nome', 'Nome deve ter no máximo 50 caracteres.');
+        errors.push('Nome excede 50 caracteres.');
+      }
+
+      // Validação — E-mail
+      const emailReg = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!email) {
+        showError('email', 'E-mail é obrigatório.');
+        errors.push('E-mail é obrigatório.');
+      } else if (!emailReg.test(email)) {
+        showError('email', 'Formato de e-mail inválido.');
+        errors.push('E-mail em formato inválido.');
+      }
+
+      // Validação — Assunto
+      const validAssuntos = ['duvida', 'sugestao', 'suporte'];
+      if (!assunto || !validAssuntos.includes(assunto)) {
+        showError('assunto', 'Selecione um assunto válido.');
+        errors.push('Assunto não selecionado.');
+      }
+
+      // Validação — Idade (opcional)
+      if (idadeRaw !== '') {
+        const idade = parseInt(idadeRaw, 10);
+        if (isNaN(idade) || idade < 1 || idade > 120) {
+          showError('idade', 'Idade deve ser entre 1 e 120.');
+          errors.push('Idade fora da faixa permitida (1–120).');
+        }
+      }
+
+      // Exibe caixa de erros global
+      const box  = document.getElementById('errorBox');
+      const list = document.getElementById('errorList');
+
+      if (errors.length > 0) {
+        list.innerHTML = errors.map(e => `<li>${e}</li>`).join('');
+        box.style.display = 'block';
+        box.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        return;
+      }
+
+      box.style.display = 'none';
+      form.submit();
+    });
+  </script>
+</body>
+</html>
