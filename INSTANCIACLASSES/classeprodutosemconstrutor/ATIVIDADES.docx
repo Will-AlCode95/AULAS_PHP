@@ -1,0 +1,49 @@
+Exercício 1: A Classe Produto (Sem Construtor)
+Objetivo: Praticar a instanciação básica e o uso de métodos set para alimentar o objeto.
+
+Crie uma classe chamada Produto no arquivo Produto.class.php.
+
+Adicione os atributos privados: $nome e $valor.
+
+Crie os métodos get e set para ambos os atributos.
+
+Crie um arquivo chamado produtoControle.php. Nele, instancie a classe, use o setNome() para definir "Notebook" e o setValor() para definir 3500.
+
+Imprima o nome e o valor usando os métodos get.
+
+
+
+
+Exercício 2: A Classe Veículo (Com Construtor)
+Objetivo: Praticar a passagem de parâmetros no momento em que o objeto é criado (new).
+
+Crie uma classe chamada Veiculo.
+
+Adicione os atributos privados: $marca e $modelo.
+
+Crie o método construtor que receba a marca e o modelo como argumentos e preencha os atributos.
+
+Crie um método público chamado exibirDados() que retorne uma frase como: "Este veículo é um [marca] [modelo]".
+
+No arquivo de controle, instancie o objeto passando "Toyota" e "Corolla" diretamente no parêntese do new.
+
+Dê um echo no retorno do método exibirDados().
+
+
+
+Exercício 3: Desafio de Lógica (Calculadora de Médias)
+Objetivo: Misturar os conceitos de atributos e métodos de cálculo.
+
+Baseando-se no seu exemplo da Calculadora, crie uma classe chamada Aluno.
+
+Atributos: $nome, $nota1 e $nota2.
+
+Use um construtor para receber o nome do aluno.
+
+Use setters para receber a $nota1 e a $nota2.
+
+Crie um método chamado calcularMedia() que retorne a soma das notas dividida por 2.
+
+No controle, exiba o resultado final assim:
+
+"O aluno [nome] ficou com média [resultado]."
